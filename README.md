@@ -29,6 +29,7 @@ Collaborator
 
 @zelaldrtn
 zelaldrtn
+<<<<<<< HEAD
 Awaiting zelaldrtn’s response
 
 
@@ -54,3 +55,6 @@ Bu soruyu alaaddin sordu
 1
 
 2
+=======
+Awaiting zelaldrtn’s response
+>>>>>>> parent of c67e625 (docs readme.md)
