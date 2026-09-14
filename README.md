@@ -49,3 +49,8 @@ Bu soruyu alaaddin sordu
 6
 7
 8
+9
+0
+1
+
+2
