@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8"> <!-- sayfa ve arama mototruna bilgi vermek için kullanıyoruz-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- mobil uygulama görünümü için önemli-->
+    <meta name="description" content="Buluşma, çevrendeki etkinlikleri keşfetmeni ve bilet almanı sağlayan mobil uygulamadır.">
+    <title>EtkinGo - Etkinlik Planlama Uygulaması</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #222;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+
+        thead th {
+            background-color: #eee;
+        }
+
+        aside {
+            border-left: 4px solid #999;
+            padding-left: 15px;
+        }
+
+        footer {
+            border-top: 1px solid #999;
+            margin-top: 30px;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER: sayfanın tanıtıcı üst bölümü -->
+    <header>
+        <h1>Buluşma</h1> <!--sayfanın en önemli başlığı , 1 adet bulunur-->
+        <p>Çevrendeki etkinlikleri keşfet, biletini telefonundan al.</p>
+    </header>
+
+    <!-- NAV: sayfa içi gezinme bağlantıları -->
+    <nav aria-label="Ana Menü">
+        <ul>
+            <li><a href="#tanitim">Uygulama</a></li>
+            <li><a href="#ozellikler">Özellikler</a></li>
+            <li><a href="#etkinlikler">Yaklaşan Etkinlikler</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN: sayfanın ana içeriği, bir sayfada yalnızca bir tane bulunur -->
+    <main>
+
+        <!-- ARTICLE: kendi başına anlam taşıyan bağımsız içerik -->
+        <article id="tanitim">
+            <h2>Buluşma nedir?</h2>
+
+            <p>
+                Buluşma, bulunduğun konumun çevresindeki konser, tiyatro, atölye ve
+                spor etkinliklerini harita üzerinde gösteren bir mobil uygulamadır.
+                Beğendiğin etkinliği seçip biletini uygulama içinden satın alırsın;
+                bilet karekod olarak telefonuna kaydedilir.
+            </p>
+
+            <p>
+                İlgi alanlarını bir kez seçmen yeterli. Uygulama sana yakın ve uygun
+                fiyatlı etkinlikleri kendiliğinden öne çıkarır, etkinlik gününden bir
+                gün önce hatırlatma bildirimi gönderir.
+            </p>
+        </article>
+
+        <!-- SECTION: başlığı olan konu bloğu - burada LİSTE yer alıyor -->
+        <section id="ozellikler">
+            <h2>Öne çıkan özellikler</h2>
+
+            <ul>
+                <li><strong>Harita görünümü:</strong> Yakınındaki etkinlikler mesafeye göre sıralanır.</li>
+                <li><strong>Tek dokunuşla bilet:</strong> Kayıtlı kartınla satın alma üç saniye sürer.</li>
+                <li><strong>Karekodlu bilet:</strong> Bilet çevrimdışıyken de telefonunda açılır.</li>
+                <li><strong>Arkadaşını davet et:</strong> Etkinliği paylaş, biletleri yan yana koltuklardan al.</li>
+                <li><strong>Hatırlatma bildirimi:</strong> Etkinlikten bir gün önce ve bir saat önce uyarı alırsın.</li>
+                <li><strong>Takvim aktarımı:</strong> Aldığın biletler telefonunun takvimine otomatik eklenir.</li>
+            </ul>
+        </section>
+
+        <!-- SECTION: başlığı olan konu bloğu - burada TABLO yer alıyor -->
+        <section id="etkinlikler">
+            <h2>Yaklaşan etkinlikler</h2>
+
+            <table>
+                <caption>Bolu ve çevresinde bu hafta uygulamada listelenen etkinlikler.</caption>
+
+                <thead> <!-- tablonun başlığı-->
+                    <tr>
+                        <th scope="col">Etkinlik</th>
+                        <th scope="col">Tarih</th>
+                        <th scope="col">Mekân</th>
+                        <th scope="col">Bilet</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Akustik Sonbahar Konseri</td>
+                        <td>24 Eylül 2026</td>
+                        <td>Kültür Merkezi</td>
+                        <td>250 TL</td>
+                    </tr>
+                    <tr>
+                        <td>Yazılımcılar Buluşması</td>
+                        <td>26 Eylül 2026</td>
+                        <td>Teknopark Salon B</td>
+                        <td>Ücretsiz</td>
+                    </tr>
+                    <tr>
+                        <td>Gölcük Doğa Yürüyüşü</td>
+                        <td>27 Eylül 2026</td>
+                        <td>Gölcük Tabiat Parkı</td>
+                        <td>120 TL</td>
+                    </tr>
+                    <tr>
+                        <td>Fotoğrafçılık Atölyesi</td>
+                        <td>30 Eylül 2026</td>
+                        <td>Belediye Sanat Evi</td>
+                        <td>180 TL</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Bu hafta listelenen etkinlik sayısı: 4</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <!-- ASIDE: ana içeriği destekleyen yan bilgi -->
+        <aside>
+            <h2>Kullanıcı yorumu</h2>
+
+            <blockquote>. <!-- başka bir kaynaktan alınan uzun bir alıntı-->
+                <p>
+                    Şehre yeni taşınmıştım, hafta sonu ne yapacağımı bilmiyordum.
+                    İlk ay içinde üç etkinliğe gittim, ikisini bu uygulamada tesadüfen gördüm.
+                </p>
+            </blockquote>
+
+            <p>Merve A., uygulama mağazası yorumu</p>
+        </aside>
+
+    </main>
+
+    <!-- FOOTER: iletişim ve telif bilgileri -->
+    <footer>
+        <h2 id="iletisim">İletişim</h2>
+
+        <p>Buluşma, Android ve iOS için ücretsiz olarak indirilebilir.</p>
+
+        <address>
+            E-posta:
+            <a href="mailto:betul@gmail.com">merhaba@bulusmaapp.com</a>
+        </address>
+
+        <p><small>&copy; 2026 Buluşma. Tüm hakları saklıdır.</small></p>
+    </footer>
+
+</body>
+
+</html>
