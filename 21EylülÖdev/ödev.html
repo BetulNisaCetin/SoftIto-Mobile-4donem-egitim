@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Nuit Trésor</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0e0413 0%, #1a0928 50%, #2a0c30 100%);
+            color: #fef3e2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .player-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            /* Maksimum genişlik */
+            border-radius: 12px;
+            overflow: hidden;
+            /* Taşmaları engeller */
+            background: #000;
+            box-shadow: 0 12px 35px rgba(67, 18, 59, 0.6), 0 0 15px rgba(231, 203, 138, 0.15);
+            aspect-ratio: 16 / 9;
+            /* Videonun 16:9 oranını korur */
+        }
+
+        video {
+
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        h1 {
+            color: #f7e7ce;
+            /* Vanilya Orkidesi Parlaklık */
+            text-shadow: 0 0 12px rgba(224, 168, 203, 0.3);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(14, 4, 19, 0.95));
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+            color: #f3e5d8;
+        }
+
+        .progress-bar {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 5px;
+            border-radius: 5px;
+            background: rgba(243, 229, 216, 0.2);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #e7cb8a;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .left-controls,
+        .right-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        button {
+            background: rgba(243, 229, 216, 0.08);
+            border: 1px solid rgba(231, 203, 138, 0.2);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        button:hover {
+            background: rgba(139, 29, 96, 0.4);
+        }
+
+        .speed-badge {
+            background: #6b1548;
+            color: white;
+        }
+
+        .faq-box {
+            width: 100%;
+            max-width: 640px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .faq-box h3 {
+            color: #f7e7ce;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+
+        details {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(231, 203, 138, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 14px 16px;
+            cursor: pointer;
+            color: #f7e7ce;
+            font-weight: 600;
+            list-style: none;
+        }
+
+        summary:hover {
+            background: rgba(139, 29, 96, 0.25);
+        }
+
+        details p {
+            padding: 0 16px 14px;
+            color: #f3e5d8;
+            line-height: 1.6;
+        }
+
+        summary::after {
+            content: "+";
+            float: right;
+            font-size: 20px;
+        }
+
+        details[open] summary::after {
+            content: "−";
+        }
+    </style>
+</head>
+
+<body>
+    <h1>La Nuit Trésor – Eau de Parfum</h1>
+    <p style="max-width: 640px; margin-bottom: 20px; text-align: center;">
+        La Nuit Trésor – Eau de Parfum, zarif ve etkileyici karakteriyle
+        romantik bir koku deneyimi sunar. Meyvemsi ve çiçeksi notaların
+        sıcak ve büyüleyici dokunuşlarla buluştuğu bu parfüm, özellikle
+        akşam kullanımı için sofistike bir atmosfer yaratır.
+    </p>
+
+    <div class="player-container" id="videoBox">
+        <video id="myVideo" playsinline webkit-playsinline preload="metadata">
+            <source src="lanuit.mp4" type="video/mp4">
+            <source src="lanuit.mp4" type="video/webm">
+            Tarayıcınız HTML5 video etiketini desteklemiyor.
+        </video>
+
+        <div class="custom-controls">
+            <!-- İlerleme çubuğu ve süre -->
+            <div class="timeline-container">
+                <span id="currentTime">00:00</span>
+                <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0">
+                <span id="durationTime">00:00</span>
+            </div>
+
+
+            <div class="button-group">
+                <div class="left-controls">
+                    <button id="btnPlay">Oynat</button>
+                    <button id="btnMute">Sesli</button>
+                </div>
+                <div class="right-controls">
+                    <button id="btnSpeed" class="speed-badge">1.0x</button>
+                    <button id="btnPip">Pip</button>
+                    <button id="btnFull">Tam Ekran</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style="margin-bottom: 16px;">Ürün videosu</h2>
+    <iframe width="640" height="360" src="https://www.youtube.com/embed/hNndxE7KIfQ"
+        title="La Nuit Trésor Ürün Tanıtım Videosu" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+
+    <label for="stok">Stok Durumu</label>
+    <progress id="stok" value="75" max="100">75%</progress>
+    <div class="hint">Stok durumu: %75 mevcut</div>
+
+    <hr style="margin: 16px 0; border: 0; border-top: 1px solid #e2e8f0;">
+    <div class="faq-box">
+
+        <h3>Sıkça Sorulan Sorular</h3>
+
+        <details open>
+            <summary>Kargo teslimat süresi ne kadardır?</summary>
+            <p>
+                Siparişleriniz aynı gün içerisinde kargoya verilir.
+            </p>
+        </details>
+
+        <details>
+            <summary>İade ve değişim şartları nelerdir?</summary>
+            <p>
+                Ürünü teslim aldığınız andan itibaren 14 gün içerisinde
+                iade edebilirsiniz.
+            </p>
+        </details>
+
+        <details>
+            <summary>Taksit seçenekleri var mı?</summary>
+            <p>
+                Tüm kredi kartlarına vade farksız 3 taksit seçeneğimiz
+                bulunmaktadır.
+            </p>
+        </details>
+        <button class="detail-button" id="openDialog">
+            Detaylı Bilgi Al
+        </button>
+        <dialog id="productDialog">
+
+            <h3>La Nuit Trésor – Eau de Parfum</h3>
+
+            <p>
+                La Nuit Trésor, zarif ve romantik karakteriyle öne çıkan
+                etkileyici bir Eau de Parfum'dür.
+            </p>
+
+            <p>
+                Meyvemsi ve çiçeksi notaların sıcak dokunuşlarla birleştiği
+                bu koku, özellikle akşam kullanımı için sofistike bir
+                deneyim sunar.
+            </p>
+
+            <p>
+                <strong>Ürün Durumu:</strong> Stokta
+            </p>
+
+            <button class="close-button" id="closeDialog">
+                Kapat
+            </button>
+
+        </dialog>
+
+    </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        const btnPlay = document.getElementById('btnPlay');
+        const btnMute = document.getElementById('btnMute');
+        const btnSpeed = document.getElementById('btnSpeed');
+        const btnPip = document.getElementById('btnPip');
+        const btnFull = document.getElementById('btnFull');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationTimeEl = document.getElementById('durationTime');
+
+        btnPlay.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                btnPlay.innerText = "Duraklat";
+            } else {
+                video.pause();
+                btnPlay.innerText = "Oynat";
+            }
+        });
+
+        // Zaman formatlama
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        // Metadata toplam süresi alma
+        video.addEventListener('loadedmetadata', () => {
+            durationTimeEl.innerText = formatTime(video.duration);
+        });
+
+        // Video oynarken ilerleme çubuğunu güncelleme
+        video.addEventListener('timeupdate', () => {
+            currentTimeEl.innerText = formatTime(video.currentTime);
+            const progress = (video.currentTime / video.duration) * 100;
+            progressBar.value = isNaN(progress) ? 0 : progress;
+        });
+
+        progressBar.addEventListener('input', (e) => {
+            const seekTime = (e.target.value / 100) * video.duration;
+            video.currentTime = seekTime;
+        });
+
+        // Sessize alma toggle
+        btnMute.addEventListener('click', () => {
+            video.muted = !video.muted;
+            btnMute.innerText = video.muted ? 'Sessiz' : 'Sesli';
+        });
+
+        // Oynatma hızı
+        const speeds = [1.0, 1.25, 1.5, 2.0];
+        let speedIndex = 0;
+        btnSpeed.addEventListener('click', () => {
+            speedIndex = (speedIndex + 1) % speeds.length;
+            video.playbackRate = speeds[speedIndex];
+        });
+
+        // Picture-in-Picture
+        btnPip.addEventListener('click', async () => {
+            try {
+                if (document.pictureInPictureElement) {
+                    await document.exitPictureInPicture();
+                } else {
+                    await video.requestPictureInPicture();
+                }
+            } catch (err) {
+                console.warn('Pip desteklenmiyor veya izin verilmedi', err);
+            }
+        });
+
+        // Tam ekran
+        btnFull.addEventListener('click', () => {
+            const container = document.getElementById('videoBox');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => alert(err.message));
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Dialog modal işlemleri
+        const dialog = document.getElementById('productDialog');
+        const openDialog = document.getElementById('openDialog');
+        const closeDialog = document.getElementById('closeDialog');
+
+        // Modalı aç
+        openDialog.addEventListener('click', () => {
+            dialog.showModal();
+        });
+
+        // Modalı kapat
+        closeDialog.addEventListener('click', () => {
+            dialog.close();
+        });
+    </script>
+</body>
+
+</html>
