@@ -1,0 +1,192 @@
+/* 1. RESET + DEĞİŞKENLER */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #eef2f6;
+  --surface: #ffffff;
+  --ink: #16323a;
+  --muted: #5d7279;
+  --brand: #0f4c5c;
+  --accent: #fb8b24;
+  --up: #1f8a5b;
+  --down: #c8434d;
+
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;  /*rem daha düzenli olmasını sağlar*/
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(15, 76, 92, 0.12);
+  --shadow-hover: 0 28px 56px rgba(15, 76, 92, 0.22);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* ÜST ÇUBUK (mobil) */
+.topbar {
+  display:flex;  /*görünüm*/
+  align-items: center; /* yataydaki hizalanma*/
+  gap: var(--space-md); /*elemanlar arası boşluk*/
+  padding: var(--space-md);
+  background: var(--brand);
+  color: #fff;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-right: auto;
+}
+
+/* 6. ANİMASYON 1: canlı durum göstergesi */
+.live {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+}
+
+.live__dot { /* canlı kurlar */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%; /*ovallik*/
+  background: #4ade80;
+  animation: pulse 1.6s ease-out infinite; /*animasyon 1.6 saniyede tekrarlıyor*/
+}
+
+@keyframes pulse { 
+  0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+  70%  { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+/* 6. ANİMASYON 2: bildirim rozeti */
+.bell {
+  position: relative;   /* konumunu butona göre ayarlıyoruz,bağımlı*/
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.bell__badge {
+  position: absolute; /* bağımsız */
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  animation: bounce 1.4s ease-in-out infinite; 
+}
+
+@keyframes bounce { /*bildirim rozeti*/
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* 4. AKIŞKAN BAŞLIK */
+.hero {
+  padding: var(--space-lg) var(--space-md);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 4rem); /* (min,tercih edilen, max) ekran büyükçe başlık kontrollü */
+  line-height: 1.1;
+  color: var(--brand);
+  margin-bottom: var(--space-sm);
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 45ch;
+}
+
+/* 2 + 3. GRID – MOBİL: 1 SÜTUN */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  padding: 0 var(--space-md) var(--space-lg);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border-left: 5px solid var(--brand);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow);
+  /* 5. HOVER için geçiş */
+  transition: transform 0.25s ease, box-shadow 0.25s ease; /*daha yumuşak geçiş */
+}
+
+.card:hover { /*kartın üstüne gelindiğinde */
+  transform: translateY(-10px); 
+  box-shadow: var(--shadow-hover);
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.amount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: var(--space-sm) 0;
+}
+
+.note { font-size: 0.9rem; color: var(--muted); }
+.note--up { color: var(--up); }
+.note--down { color: var(--down); }
+
+/* TABLET: 2 SÜTUN */
+@media (min-width: 768px) {
+  .topbar,
+  .hero { padding-inline: var(--space-lg); }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    padding-inline: var(--space-lg);
+    gap: var(--space-lg);
+  }
+}
+
+/* MASAÜSTÜ: 3 SÜTUN */
+@media (min-width: 1024px) {
+  .topbar,
+  .hero,
+  .cards {
+    max-width: 1200px;
+    margin-inline: auto; /*sayfayı yatayda ortalar*/
+  }
+
+  .topbar { max-width: none; padding-inline: max(1.5rem, calc((100% - 1200px) / 2 + 1.5rem)); }
+
+  .cards { grid-template-columns: repeat(3, 1fr); } /* tek kolonda 3 tane */
+}
+
+/* Erişilebilirlik: hareketi azalt tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .live__dot,
+  .bell__badge { animation: none; }
+}
