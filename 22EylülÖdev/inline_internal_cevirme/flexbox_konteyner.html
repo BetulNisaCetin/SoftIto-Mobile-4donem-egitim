@@ -9,7 +9,7 @@
         *,
         *::before,   
         *::after {
-            box-sizing: border-box; /*tasarım taşmaması için */
+            box-sizing: border-box; /* tasarım taşmaması için */
             margin: 0;
             padding: 0;
         }
@@ -40,6 +40,25 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
+
+        /* Inline stillerden aktarılan yeni sınıflar */
+        .card-title {
+            font-size: 16px;
+        }
+
+        .card-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .btn-edit {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -53,13 +72,14 @@
         <div class="chip">Oyun Konsolu</div>
         <div class="chip">Aksesuar</div>
     </div>
+
     <h2>Navigasyon barı (space-between + align-items)</h2>
-    <div class="card-reader">
+    <div class="card-header">
         <div>
-            <h3 style="font-size: 16px;">Kullanıcı Profili</h3>
-            <p style="color: #64748b; font-size: 13px;">Son giriş: Bugün 12:44</p>
+            <h3 class="card-title">Kullanıcı Profili</h3>
+            <p class="card-subtitle">Son giriş: Bugün 12:44</p>
         </div>
-        <button style="background: #4f46e5; color: white; border: none; padding: 8px 14px; border-radius: 8px;">
+        <button class="btn-edit">
             Düzenle
         </button>
     </div>

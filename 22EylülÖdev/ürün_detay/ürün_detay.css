@@ -1,0 +1,883 @@
+
+:root {
+  /* Sayfanın ana arka plan rengi */
+  --bg: #2a1620;
+
+  /* Panellerin / kutuların arka plan rengi */
+  --panel: #3a1f2c;
+
+  /* Kartların arka plan rengi */
+  --card: #241220;
+
+  /* Kenarlıkların rengi */
+  --line: #5c3448;
+
+  /* Vurgu rengi: pembe/altın ton */
+  --gold: #e7a8b8;
+
+  /* Vurgunun daha koyu ve soft versiyonu */
+  --gold-soft: #4a2536;
+
+  /* Ana yazı rengi */
+  --ink: #faeef2;
+
+  /* İkincil / daha soluk yazı rengi */
+  --muted: #c495a6;
+}
+
+
+/* =========================================================
+   TÜM ELEMENTLER
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+
+  /* 
+     width ve height hesaplanırken
+     padding ve border'ın da genişliğe dahil edilmesini sağlar. normalde content box varsayılan
+  */
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  /* Tarayıcının varsayılan dış boşluğunu kaldırır */
+  margin: 0;
+
+  /* Varsayılan iç boşluğu kaldırır */
+  padding: 0;
+
+  /* Sayfanın dış arka plan rengi */
+  background: #160b10;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  /* Sayfadaki temel yazı rengi */
+  color: var(--ink);
+}
+
+
+body {
+
+  /* İçeriği flex yapıya dönüştürür */
+  display: flex;
+
+  /* İçeriği yatayda ortalar */
+  justify-content: center;
+}
+
+
+.phone {
+  /* Ekranın tamamını kullanabilir */
+  width: 100%;
+
+  /* En fazla 480px genişliğe çıkabilir */
+  max-width: 480px;
+
+  /* Minimum yüksekliği ekranın tamamı kadar */
+  min-height: 100vh;
+
+  /* Ana telefon ekranının arka planı */
+  background: var(--bg);
+
+  /* İçindeki absolute elementlerin konumlandırma
+     referansı .phone olur */
+  position: relative;
+
+  /* Alt sabit menünün içeriği kapatmaması için
+     altta boşluk bırakır */
+  padding-bottom: 90px;
+}
+
+
+/* =========================================================
+   ÜST MENÜ / STICKY MENU
+   ========================================================= */
+
+.topbar {
+
+  /* Sayfa kaydırıldığında üstte sabit kalır */
+  position: sticky;
+
+  /* Ekranın en üstüne yapışır */
+  top: 0;
+
+  /* Diğer elementlerin üzerinde görünmesini sağlar */
+  z-index: 30;
+
+  /* İçeriği yatay bir flex düzenine sokar */
+  display: flex;
+
+  /* Dikey olarak ortalar */
+  align-items: center;
+
+  /* İçerikleri sağa ve sola dağıtır */
+  justify-content: space-between;
+
+  /* Elemanlar arasında 12px boşluk bırakır */
+  gap: 12px;
+
+  /* Üst-alt ve sağ-sol iç boşluk */
+  padding: 16px 18px;
+
+  /* Telefonlardaki güvenli üst alanı dikkate alır */
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+
+  /* Yarı saydam arka plan */
+  background: rgba(42, 22, 32, 0.92);
+
+  /* Arka plandaki görüntüyü hafif bulanıklaştırır */
+  backdrop-filter: blur(6px);
+
+  /* Altına ince bir çizgi ekler */
+  border-bottom: 1px solid var(--line);
+}
+
+
+/* Geri butonu */
+
+.topbar .back {
+
+  /* Butonun genişliği */
+  width: 34px;
+
+  /* Butonun yüksekliği */
+  height: 34px;
+
+  /* Tam yuvarlak görünüm */
+  border-radius: 50%;
+
+  /* Kenarlık */
+  border: 1px solid var(--line);
+
+  /* İkon rengi */
+  color: var(--gold);
+
+  /* Flex ile içeriği ortalar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* İkon yazı boyutu */
+  font-size: 18px;
+
+  /* Flex içinde küçülmesini engeller */
+  flex-shrink: 0;
+}
+
+
+/* Üst menüdeki marka adı */
+
+.topbar .brand {
+
+  /* Yazı boyutu */
+  font-size: 12px;
+
+  /* Harfler arasında ekstra boşluk */
+  letter-spacing: 0.25em;
+
+  /* Yazı rengi */
+  color: var(--gold);
+
+  /* Kullanılabilir alanı doldurur */
+  flex: 1;
+
+  /* Yazıyı ortalar */
+  text-align: center;
+
+  /* Yazı tipi */
+  font-family: Georgia, serif;
+}
+
+
+/* Sağ taraftaki ikonların bulunduğu alan */
+
+.topbar .icons {
+
+  /* İkonları yatay dizer */
+  display: flex;
+
+  /* İkonlar arasında 10px boşluk */
+  gap: 10px;
+
+  /* Alanın küçülmesini engeller */
+  flex-shrink: 0;
+}
+
+
+/* Sağ taraftaki ikonların kendisi */
+
+.topbar .icons span {
+
+  /* İkon kutusunun genişliği */
+  width: 34px;
+
+  /* İkon kutusunun yüksekliği */
+  height: 34px;
+
+  /* Yuvarlak şekil */
+  border-radius: 50%;
+
+  /* Kenarlık */
+  border: 1px solid var(--line);
+
+  /* İkon rengi */
+  color: var(--muted);
+
+  /* İkonu yatay ve dikey ortalar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* İkon boyutu */
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   ÜRÜN GÖRSELİ
+   ========================================================= */
+
+.media {
+
+  /* İçindeki badge'lerin absolute konumlandırılabilmesi için */
+  position: relative;
+
+  /* Ürün görselinin arka planı */
+  background: radial-gradient(
+    circle at 50% 20%,
+    #4a2536 0%,
+    #200f18 70%
+  );
+
+  /* Üst, sağ-sol ve alt iç boşluk */
+  padding: 34px 20px 26px;
+}
+
+
+/* Ürün resmi */
+
+.media img {
+
+  /* Resmi block element yapar */
+  display: block;
+
+  /* Bulunduğu alanın genişliğini kullanır */
+  width: 100%;
+
+  /* Ancak maksimum 220px olabilir */
+  max-width: 220px;
+
+  /* Resmi yatay olarak ortalar */
+  margin: 0 auto;
+
+  /* Resmin arkasına gölge efekti verir */
+  filter: drop-shadow(
+    0 20px 26px rgba(0, 0, 0, 0.6)
+  );
+}
+
+
+/* Genel rozet özellikleri */
+
+.badge {
+
+  /* Rozeti bulunduğu .media içerisinde konumlandırır */
+  position: absolute;
+
+  /* Yazı boyutu */
+  font-size: 10.5px;
+
+  /* Yazıyı kalınlaştırır */
+  font-weight: 600;
+
+  /* Harfler arasına küçük boşluk ekler */
+  letter-spacing: 0.06em;
+
+  /* İç boşluk */
+  padding: 6px 11px;
+
+  /* Köşeleri hafif yuvarlatır */
+  border-radius: 2px;
+
+  /* Rozet yazı rengi */
+  color: var(--bg);
+}
+
+
+/* İndirim rozeti */
+
+.badge.discount {
+
+  /* Üstten 20px uzaklık */
+  top: 20px;
+
+  /* Soldan 20px uzaklık */
+  left: 20px;
+
+  /* Rozetin arka plan rengi */
+  background: var(--gold);
+}
+
+
+/* Kargo rozeti */
+
+.badge.shipping {
+
+  /* Üstten 20px uzaklık */
+  top: 20px;
+
+  /* Sağdan 20px uzaklık */
+  right: 20px;
+
+  /* Arka planı yok */
+  background: transparent;
+
+  /* Yazı rengi */
+  color: var(--gold);
+
+  /* Altın renkli kenarlık */
+  border: 1px solid var(--gold);
+}
+
+
+/* =========================================================
+   ÜRÜN BİLGİ ALANI
+   ========================================================= */
+
+.info {
+
+  /* İç boşluk */
+  padding: 22px 20px 6px;
+
+  /* Üst kısmına çizgi */
+  border-top: 1px solid var(--line);
+}
+
+
+/* Marka adı */
+
+.brand-name {
+
+  /* Yazı boyutu */
+  font-size: 11px;
+
+  /* Harfler arası boşluk */
+  letter-spacing: 0.3em;
+
+  /* Marka yazısının rengi */
+  color: var(--gold);
+
+  /* Alt boşluk */
+  margin: 0 0 8px;
+}
+
+
+/* Ürün başlığı */
+
+.title {
+
+  /* Başlık yazı boyutu */
+  font-size: 19px;
+
+  /* Satır yüksekliği */
+  line-height: 1.4;
+
+  /* Alt boşluk */
+  margin: 0 0 12px;
+
+  /* Normal yazı kalınlığı */
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   PUAN / YILDIZ ALANI
+   ========================================================= */
+
+.rating-row {
+
+  /* Yıldız ve puanı yan yana dizer */
+  display: flex;
+
+  /* Dikeyde ortalar */
+  align-items: center;
+
+  /* Elemanlar arasında 8px boşluk */
+  gap: 8px;
+
+  /* Alt boşluk */
+  margin-bottom: 18px;
+
+  /* Yazı boyutu */
+  font-size: 12.5px;
+
+  /* Soluk yazı rengi */
+  color: var(--muted);
+
+  /* Sans-serif yazı tipi */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* Yıldızların görünümü */
+
+.rating-row .stars {
+
+  /* Yıldızların rengi */
+  color: var(--gold);
+
+  /* Yıldızlar arasında boşluk */
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   FİYAT ALANI
+   ========================================================= */
+
+.price-row {
+
+  /* Fiyatları yan yana dizer */
+  display: flex;
+
+  /* Yazıların alt çizgilerini hizalar */
+  align-items: baseline;
+
+  /* Fiyatlar arasında boşluk */
+  gap: 10px;
+
+  /* Alt boşluk */
+  margin-bottom: 22px;
+
+  /* Sans-serif font */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* Güncel fiyat */
+
+.price-row .now {
+
+  /* Fiyat yazı boyutu */
+  font-size: 23px;
+
+  /* Kalın yazı */
+  font-weight: 700;
+
+  /* Ana yazı rengi */
+  color: var(--ink);
+}
+
+
+/* Yaklaşık fiyat bilgisi */
+
+.price-row .approx {
+
+  /* Küçük yazı */
+  font-size: 11px;
+
+  /* Soluk renk */
+  color: var(--muted);
+}
+
+
+/* =========================================================
+   BÖLÜM BAŞLIĞI
+   ========================================================= */
+
+.section-label {
+
+  /* Yazı boyutu */
+  font-size: 11px;
+
+  /* Harfler arası boşluk */
+  letter-spacing: 0.15em;
+
+  /* Yazı rengi */
+  color: var(--muted);
+
+  /* Üst ve alt boşluk */
+  margin: 4px 0 12px;
+
+  /* Sans-serif font */
+  font-family: Helvetica, Arial, sans-serif;
+
+  /* Yazıları büyük harfe çevirir */
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MİKTAR SEÇİM ALANI
+   ========================================================= */
+
+.chip-list {
+
+  /* Chip'leri flex düzenine sokar */
+  display: flex;
+
+  /* Satıra sığmayan chip'leri alt satıra geçirir */
+  flex-wrap: wrap;
+
+  /* Chip'ler arasında 8px boşluk */
+  gap: 8px;
+
+  /* Alt boşluk */
+  margin-bottom: 26px;
+}
+
+
+/* Chip / seçenek */
+
+.chip {
+
+  /* Kenarlık */
+  border: 1px solid var(--line);
+
+  /* Arka plan */
+  background: var(--panel);
+
+  /* İç boşluk */
+  padding: 10px 18px;
+
+  /* Hafif yuvarlak köşe */
+  border-radius: 2px;
+
+  /* Yazı boyutu */
+  font-size: 13px;
+
+  /* Yazı rengi */
+  color: var(--muted);
+
+  /* Yazı tipi */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* Seçilmiş chip */
+
+.chip.selected {
+
+  /* Kenarlığı vurgu rengine çevirir */
+  border-color: var(--gold);
+
+  /* Arka planı değiştirir */
+  background: var(--gold-soft);
+
+  /* Yazı rengini vurgu rengine çevirir */
+  color: var(--gold);
+
+  /* Yazıyı kalınlaştırır */
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ÜRÜN AÇIKLAMASI
+   ========================================================= */
+
+.desc {
+
+  /* İç boşluk */
+  padding: 6px 20px 24px;
+
+  /* Yazı boyutu */
+  font-size: 13.5px;
+
+  /* Satırlar arasındaki mesafe */
+  line-height: 1.7;
+
+  /* Açıklama yazısının rengi */
+  color: #cdc2b3;
+
+  /* Üst kenarlık */
+  border-top: 1px solid var(--line);
+
+  /* Üstten boşluk */
+  margin-top: 8px;
+
+  /* Sans-serif font */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* Açıklama başlıkları */
+
+.desc h3 {
+
+  /* Küçük başlık */
+  font-size: 11px;
+
+  /* Harf aralığı */
+  letter-spacing: 0.15em;
+
+  /* Harfleri büyük yapar */
+  text-transform: uppercase;
+
+  /* Başlık rengi */
+  color: var(--gold);
+
+  /* Üst ve alt boşluk */
+  margin: 18px 0 10px;
+
+  /* Başlıklarda Georgia kullanılır */
+  font-family: Georgia, serif;
+}
+
+
+/* =========================================================
+   PARFÜM NOTLARI
+   ========================================================= */
+
+.notes-row {
+
+  /* Notları yatay olarak dizer */
+  display: flex;
+
+  /* Elemanlar arasında boşluk */
+  justify-content: space-between;
+
+  /* Aralarındaki boşluk */
+  gap: 10px;
+
+  /* Üst boşluk */
+  margin-top: 10px;
+}
+
+
+/* Her bir nota kutusu */
+
+.notes-row div {
+
+  /* Her kutu eşit genişlikte olur */
+  flex: 1;
+
+  /* Yazıyı ortalar */
+  text-align: center;
+
+  /* Kenarlık */
+  border: 1px solid var(--line);
+
+  /* İç boşluk */
+  padding: 10px 6px;
+
+  /* Köşeleri hafif yuvarlatır */
+  border-radius: 2px;
+}
+
+
+/* Nota başlığı */
+
+.notes-row .label {
+
+  /* Kendi satırında görünmesini sağlar */
+  display: block;
+
+  /* Yazı boyutu */
+  font-size: 9.5px;
+
+  /* Harfler arası boşluk */
+  letter-spacing: 0.1em;
+
+  /* Renk */
+  color: var(--gold);
+
+  /* Alt boşluk */
+  margin-bottom: 4px;
+
+  /* Büyük harfe çevirir */
+  text-transform: uppercase;
+}
+
+
+/* Nota değeri */
+
+.notes-row .val {
+
+  /* Yazı boyutu */
+  font-size: 11.5px;
+
+  /* Yazı rengi */
+  color: var(--muted);
+}
+
+
+/* =========================================================
+   KARGO BİLGİ KUTUSU
+   ========================================================= */
+
+.ship-note {
+
+  /* İkon ve yazıyı yatay dizer */
+  display: flex;
+
+  /* İçerikleri başlangıç noktasına göre hizalar */
+  align-items: flex-start;
+
+  /* İkon ve yazı arasındaki boşluk */
+  gap: 10px;
+
+  /* Arka plan */
+  background: var(--panel);
+
+  /* Kenarlık */
+  border: 1px solid var(--line);
+
+  /* Köşeleri hafif yuvarlatır */
+  border-radius: 2px;
+
+  /* İç boşluk */
+  padding: 12px 14px;
+
+  /* Üst ve alt boşluk */
+  margin: 6px 0 6px;
+
+  /* Yazı boyutu */
+  font-size: 12px;
+
+  /* Yazı rengi */
+  color: var(--muted);
+
+  /* Sans-serif yazı tipi */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* =========================================================
+   SABİT ALT SATIN ALMA BAR'I
+   ========================================================= */
+
+.bottom-bar {
+
+  /* Ekrana göre sabit konumda kalır */
+  position: fixed;
+
+  /* Ekranın en altına yerleşir */
+  bottom: 0;
+
+  /* left: 50% ile ekranın ortasına taşınır */
+  left: 50%;
+
+  /* Kendi genişliğinin yarısı kadar sola kaydırılır.
+     Böylece gerçekten ortalanmış olur. */
+  transform: translateX(-50%);
+
+  /* Genişlik */
+  width: 100%;
+
+  /* Telefon tasarımının maksimum genişliği */
+  max-width: 480px;
+
+  /* Arka plan */
+  background: var(--panel);
+
+  /* Üst kenarlık */
+  border-top: 1px solid var(--line);
+
+  /* İç boşluk */
+  padding: 14px 18px;
+
+  /* Telefonların alt güvenli alanını dikkate alır */
+  padding-bottom: calc(
+    14px + env(safe-area-inset-bottom, 0px)
+  );
+
+  /* İçerikleri flex yapar */
+  display: flex;
+
+  /* Dikey olarak ortalar */
+  align-items: center;
+
+  /* İçerikleri iki yana dağıtır */
+  justify-content: space-between;
+
+  /* Elemanlar arasındaki boşluk */
+  gap: 14px;
+
+  /* Diğer içeriklerin üzerinde görünmesini sağlar */
+  z-index: 40;
+
+  /* Yazı tipi */
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+/* Alt bardaki fiyat alanı */
+
+.bottom-bar .price-block {
+
+  /* Fiyat ve açıklamayı alt alta dizer */
+  display: flex;
+
+  flex-direction: column;
+
+  /* Satır yüksekliği */
+  line-height: 1.2;
+}
+
+
+/* Alt bardaki "Fiyat" gibi küçük açıklama */
+
+.bottom-bar .price-block .label {
+
+  /* Yazı boyutu */
+  font-size: 10.5px;
+
+  /* Yazı rengi */
+  color: var(--muted);
+
+  /* Harfler arası boşluk */
+  letter-spacing: 0.08em;
+}
+
+
+/* Alt bardaki fiyat */
+
+.bottom-bar .price-block .amount {
+
+  /* Fiyat boyutu */
+  font-size: 18px;
+
+  /* Kalın fiyat */
+  font-weight: 700;
+
+  /* Ana yazı rengi */
+  color: var(--ink);
+}
+
+
+/* Satın alma butonu */
+
+.bottom-bar button {
+
+  /* Kenarlık */
+  border: 1px solid var(--gold);
+
+  /* Buton arka planı */
+  background: var(--gold);
+
+  /* Buton yazı rengi */
+  color: #1a1712;
+
+  /* Yazı boyutu */
+  font-size: 13.5px;
+
+  /* Kalın yazı */
+  font-weight: 700;
+
+  /* Harfler arası boşluk */
+  letter-spacing: 0.05em;
+
+  /* Butonun iç boşluğu */
+  padding: 13px 24px;
+
+  /* Hafif yuvarlatılmış köşeler */
+  border-radius: 2px;
+
+  /* Flex içerisinde butonun küçülmesini engeller */
+  flex-shrink: 0;
+}

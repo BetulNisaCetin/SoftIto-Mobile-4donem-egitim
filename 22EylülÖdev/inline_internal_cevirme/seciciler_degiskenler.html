@@ -6,7 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSS Seçici Değişkenler</title>
     <style>
-        /*Global css değişkenleri*/
+        /* Altın kural: Sıfırlama bloğu */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Global CSS değişkenleri */
         :root {
             --brand-primary: #4f46e5;
             --brand-accent: #06b6d4;
@@ -15,13 +24,14 @@
             --radius-md: 12px;
         }
 
-        /*Dark Mode Hazırlığı
-        @media (prefers-color-scheme :dark) {
+        /* Dark Mode Hazırlığı 
+        @media (prefers-color-scheme: dark) {
             :root {
                 --bg-surface: #1e293b;
                 --text-main: #f8fafc;
-
-            }*/
+            }
+        }
+        */
 
         body {
             font-family: system-ui, -apple-system,
@@ -33,7 +43,7 @@
             padding: 24px;
         }
 
-        /* Puan (0,0,0,1)=1*/
+        /* Puan (0,0,0,1)=1 */
         button {
             background-color: gray;
             color: white;
@@ -42,24 +52,25 @@
             border-radius: var(--radius-md);
             font-size: 16px;
             cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
-        /*Puan (0,0,1,0)=10, background color= grayi ezer */
+        /* Puan (0,0,1,0)=10, background-color: gray'i ezer */
         .btn-action {
             background-color: var(--brand-primary);
         }
 
-        /*Puan (0,0,1,1)*/
+        /* Puan (0,0,1,1) */
         button.btn-action {
             box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
         }
 
-        /*puan (0,1,0,0) > hepsini ezer */
-        /*puan (0,1,0,0)-> hepsini ezer*/
+        /* Puan (0,1,0,0) > hepsini ezer */
         #submit-btn {
             background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
         }
 
+        /* Pseudo-class düzeltmeleri (:hover ve :active) */
         .btn-action:hover {
             transform: translateY(-2px);
             filter: brightness(1.1);
@@ -72,9 +83,8 @@
 </head>
 
 <body>
-    <h2>Css değişkenleri</h2>
+    <h2>CSS Değişkenleri</h2>
     <button id="submit-btn" class="btn-action">İşlemi Onayla</button>
-
 </body>
 
 </html>
