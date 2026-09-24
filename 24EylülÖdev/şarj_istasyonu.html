@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şarj Süresi ve Ücret Hesaplayıcı</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #sonuc {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Elektrikli araç şarj süresi hesaplayıcı</h2>
+
+  <div class="form-group">
+    <label for="mevcutYuzde">Mevcut Yüzde (%):</label>
+    <input type="number" id="mevcutYuzde" value="20" min="0" max="100">
+  </div>
+
+  <div class="form-group">
+    <label for="hedefYuzde">Hedef Yüzde (%):</label>
+    <input type="number" id="hedefYuzde" value="80" min="0" max="100">
+  </div>
+
+  <div class="form-group">
+    <label for="bataryaKW">Batarya Kapasitesi (kWh):</label>
+    <input type="number" id="bataryaKW" value="60">
+  </div>
+
+  <div class="form-group">
+    <label for="istasyonKW">İstasyon Gücü (kW):</label>
+    <input type="number" id="istasyonKW" value="20">
+  </div>
+
+  <div class="form-group">
+    <label for="aracTipi">Araç Tipi:</label>
+    <select id="aracTipi">
+      <option value="sedan">Sedan (Max 11 kW)</option>
+      <option value="suv">SUV (Max 22 kW)</option>
+      <option value="ticari">Ticari (Max 50 kW)</option>
+      <option value="spor">Spor (Max 150 kW)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="saat">Saat (0-23):</label>
+    <input type="number" id="saat" value="14" min="0" max="23">
+  </div>
+
+  <button onclick="hesaplaVeGoster()">Hesapla</button>
+
+  <div id="sonuc"></div>
+
+  <script>
+    const ARAC_TIPLERI = {
+      sedan: { maxKabulKW: 11 },
+      suv: { maxKabulKW: 22 },
+      ticari: { maxKabulKW: 50 },
+      spor: { maxKabulKW: 150 }
+    };
+
+    // kWh Başına Tarife Ücretleri (TL)
+    const TARIFELER = {
+      gunduz: { birimFiyat: 8.5 }, // 06:00 - 22:00 arası
+      gece: { birimFiyat: 5.5 }    // 22:00 - 06:00 arası
+    };
+
+    const sarjHesapla = (
+      mevcutYuzde,
+      hedefYuzde,
+      bataryaKW,
+      istasyonKW,
+      aracTipi,
+      saat = new Date().getHours()
+    ) => {
+      if (mevcutYuzde >= hedefYuzde) {
+        return { sureDakika: 0, ucretTL: 0, tarife: "Şarj Gerekmiyor" };
+      }
+
+      // 1. Tarife ve Ücret Tespiti
+      const isGece = saat >= 22 || saat < 6;
+      const tarifeTipi = isGece ? "Gece Tarifesi" : "Gündüz Tarifesi";
+      const birimFiyat = isGece ? TARIFELER.gece.birimFiyat : TARIFELER.gunduz.birimFiyat;
+
+      // 2. Güç ve Süre Hesaplama
+      const aktifIstasyonKW = isGece ? istasyonKW : istasyonKW * 0.9;
+      const aracLimit = ARAC_TIPLERI[aracTipi]?.maxKabulKW || istasyonKW;
+      const efektifGuc = Math.min(aktifIstasyonKW, aracLimit);
+
+      const yuzdeFark = hedefYuzde - mevcutYuzde;
+      const gerekenEnerji = bataryaKW * (yuzdeFark / 100); // kWh cinsinden harcanacak enerji
+      const sureDakika = (gerekenEnerji / efektifGuc) * 60;
+
+      // 3. Toplam Ücret Hesabı
+      const ucretTL = gerekenEnerji * birimFiyat;
+
+      return {
+        sureDakika: Math.round(sureDakika),
+        efektifGucKW: efektifGuc,
+        gerekenEnerji: gerekenEnerji.toFixed(1),
+        tarife: tarifeTipi,
+        birimFiyat: birimFiyat,
+        ucretTL: ucretTL.toFixed(2) // Virgülden sonra 2 basamak (ör: 306.00 TL)
+      };
+    };
+
+    function hesaplaVeGoster() {
+      const mevcutYuzde = Number(document.getElementById('mevcutYuzde').value);
+      const hedefYuzde = Number(document.getElementById('hedefYuzde').value);
+      const bataryaKW = Number(document.getElementById('bataryaKW').value);
+      const istasyonKW = Number(document.getElementById('istasyonKW').value);
+      const aracTipi = document.getElementById('aracTipi').value;
+      const saat = Number(document.getElementById('saat').value);
+
+      const sonuc = sarjHesapla(mevcutYuzde, hedefYuzde, bataryaKW, istasyonKW, aracTipi, saat);
+
+      const sonucDiv = document.getElementById('sonuc');
+      sonucDiv.style.display = 'block';
+      
+      if (sonuc.sureDakika === 0) {
+        sonucDiv.innerHTML = `<strong>Durum:</strong> ${sonuc.tarife}`;
+      } else {
+        sonucDiv.innerHTML = `
+          <strong>Uygulanan Tarife:</strong> ${sonuc.tarife} (${sonuc.birimFiyat} TL/kWh)<br>
+          <strong>Alınacak Enerji:</strong> ${sonuc.gerekenEnerji} kWh<br>
+          <strong>Kullanılan Şarj Gücü:</strong> ${sonuc.efektifGucKW} kW<br>
+          <strong>Tahmini Süre:</strong> ${sonuc.sureDakika} dakika<br>
+          <hr>
+          <strong style="color: #28a745; font-size: 18px;">Tahmini Ücret: ${sonuc.ucretTL} TL</strong>
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>
